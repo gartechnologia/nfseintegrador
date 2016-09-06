@@ -5,6 +5,7 @@
  */
 package br.com.gartech.nfse.integrador.testes;
 
+import br.com.gartech.nfse.integrador.jpa.EntityManagerUtil;
 import br.com.gartech.nfse.integrador.model.Pais;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,22 +22,19 @@ public class TestePersistirPais {
      */
     public static void main(String[] args) {
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("integradorPU");
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityManagerUtil.getEntityManager();
 
-//        Pais p1 = new Pais();
-//        p1.setNome("BRASIL");
-//        p1.setIso("BRA");
+        Pais p1 = new Pais();
+        //p1.setPaisID(6);
+        p1.setNome("BRASIL");
+        p1.setIso("BRA");
 
-        Pais p2 = new Pais();
-        p2.setNome("GAR");
-        p2.setIso("BRA");
-
+        
         em.getTransaction().begin();
-        em.persist(p2);
+        em.persist(p1);
         em.getTransaction().commit();
         em.close();
-        emf.close();
+
         
     }
     

@@ -6,25 +6,28 @@
 package br.com.gartech.nfse.integrador.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  *
  * @author Gilson
  */
-@Entity(name = "Paises")
+@Entity()
+@Table(name = "pais")
 public class Pais implements Serializable {
     
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int paisID; 
+    @SequenceGenerator(name = "seq_pais", sequenceName = "seq_pais_id", allocationSize = 1)
+    @GeneratedValue(generator = "seq_pais", strategy = GenerationType.SEQUENCE)
+    private int id; 
     
     @Column(name = "nome", nullable = false, length = 60)
     private String nome;
@@ -36,17 +39,17 @@ public class Pais implements Serializable {
     }
 
     /**
-     * @return the paisID
+     * @return the id
      */
-    public int getPaisID() {
-        return paisID;
+    public int getId() {
+        return id;
     }
 
     /**
-     * @param paisID the paisID to set
+     * @param id the id to set
      */
-    public void setPaisID(int paisID) {
-        this.paisID = paisID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -79,8 +82,8 @@ public class Pais implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + this.paisID;
+        int hash = 7;
+        hash = 29 * hash + this.id;
         return hash;
     }
 
@@ -96,12 +99,12 @@ public class Pais implements Serializable {
             return false;
         }
         final Pais other = (Pais) obj;
-        if (this.paisID != other.paisID) {
+        if (this.id != other.id) {
             return false;
         }
         return true;
     }
 
-    
+   
     
 }
