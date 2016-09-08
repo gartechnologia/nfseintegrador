@@ -13,11 +13,13 @@
       <property name="hibernate.connection.autocommit" value="false" />
       <property name="javax.persistence.schema-generation.database.action" value="none" />
       
-      <!-- Create/update tables automatically using mapping metadata -->
-      <property name="hibernate.hbm2ddl.auto" value="update"/>      
+      <!-- Create/update tables automatically using mapping metadata 
+      <property name="hibernate.hbm2ddl.auto" value="update"/>      -->
       
       <property name="hibernate.show_sql" value="true" />
       <property name="hibernate.format_sql" value="true" />
+      <property name="connection.release_mode" value="auto" />
+      
     </properties>
   </persistence-unit>
 </persistence>
