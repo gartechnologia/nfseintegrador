@@ -25,6 +25,9 @@ public class PaisView extends javax.swing.JDialog {
     }
 
     private void atualizarGrid() {
+        /*
+        teste
+        */
         String ejbql = "from Pais order by nome";
         queryObjetos = entityManager.createQuery(ejbql);
         listObjetos.clear();
