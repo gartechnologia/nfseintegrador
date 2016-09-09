@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.Cell;
@@ -68,63 +70,72 @@ public class ImportarView extends javax.swing.JDialog {
                 int columnIndex = nextCell.getColumnIndex();
                 
                 switch(columnIndex) {
+                    case 0:
+                        if(nextRow.getRowNum() == 0) {
+                            if(!getCellValue(nextCell).equals("CAMPUS") ) {
+                                
+                            }
+                        } else {
+                            aFaturamentoImport.setCampus((String) getCellValue(nextCell));
+                        }
+                        break;                    
                     case 1:
                         aFaturamentoImport.setCampus((String) getCellValue(nextCell));
                         break;
                     case 2:
                         aFaturamentoImport.setNumero((String) getCellValue(nextCell));
                         break;                   
-                    case 3:
-                        aFaturamentoImport.setTipo_fatura((String) getCellValue(nextCell));
-                        break;                        
-                    case 4:
-                        aFaturamentoImport.setAnocompetencia((int) getCellValue(nextCell));
-                        break;                        
-                    case 5:
-                        aFaturamentoImport.setMescompetencia((int) getCellValue(nextCell));
-                        break;                        
-                    case 6:
-                        aFaturamentoImport.setCodaluno((int) getCellValue(nextCell));
-                        break;                        
-                    case 7:
-                        aFaturamentoImport.setAlunome((String) getCellValue(nextCell));
-                        break;                        
-                    case 8:
-                        aFaturamentoImport.setCodcurso((int) getCellValue(nextCell));
-                        break;                        
-                    case 9:
-                        aFaturamentoImport.setCurso((String) getCellValue(nextCell));
-                        break;                      
-                    case 10:
-                        aFaturamentoImport.setTipocurso((String) getCellValue(nextCell));
-                        break;                        
-                    case 11:
-                        aFaturamentoImport.setAluendereco((String) getCellValue(nextCell));
-                        break;                        
-                    case 12:
-                        aFaturamentoImport.setAlubairro((String) getCellValue(nextCell));
-                        break;                        
-                    case 13:
-                        aFaturamentoImport.setAlucep((String) getCellValue(nextCell));
-                        break;                       
-                    case 14:
-                        aFaturamentoImport.setCiddesc((String) getCellValue(nextCell));
-                        break;                        
-                    case 15:
-                        aFaturamentoImport.setCiduf((String) getCellValue(nextCell));
-                        break;                      
-                    case 16:
-                        aFaturamentoImport.setAlutelefone((String) getCellValue(nextCell));
-                        break;                        
-                    case 17:
-                        aFaturamentoImport.setAlutelefone2((String) getCellValue(nextCell));
-                        break;                        
-                    case 18:
-                        aFaturamentoImport.setAluemail((String) getCellValue(nextCell));
-                        break;                        
-                    case 19:
-                        aFaturamentoImport.setAlucpf((String) getCellValue(nextCell));
-                        break;                       
+//                    case 3:
+//                        aFaturamentoImport.setTipo_fatura((String) getCellValue(nextCell));
+//                        break;                        
+//                    case 4:
+//                        aFaturamentoImport.setAnocompetencia((Integer) getCellValue(nextCell));
+//                        break;                        
+//                    case 5:
+//                        aFaturamentoImport.setMescompetencia((int) getCellValue(nextCell));
+//                        break;                        
+//                    case 6:
+//                        aFaturamentoImport.setCodaluno((int) getCellValue(nextCell));
+//                        break;                        
+//                    case 7:
+//                        aFaturamentoImport.setAlunome((String) getCellValue(nextCell));
+//                        break;                        
+//                    case 8:
+//                        aFaturamentoImport.setCodcurso((int) getCellValue(nextCell));
+//                        break;                        
+//                    case 9:
+//                        aFaturamentoImport.setCurso((String) getCellValue(nextCell));
+//                        break;                      
+//                    case 10:
+//                        aFaturamentoImport.setTipocurso((String) getCellValue(nextCell));
+//                        break;                        
+//                    case 11:
+//                        aFaturamentoImport.setAluendereco((String) getCellValue(nextCell));
+//                        break;                        
+//                    case 12:
+//                        aFaturamentoImport.setAlubairro((String) getCellValue(nextCell));
+//                        break;                        
+//                    case 13:
+//                        aFaturamentoImport.setAlucep((String) getCellValue(nextCell));
+//                        break;                       
+//                    case 14:
+//                        aFaturamentoImport.setCiddesc((String) getCellValue(nextCell));
+//                        break;                        
+//                    case 15:
+//                        aFaturamentoImport.setCiduf((String) getCellValue(nextCell));
+//                        break;                      
+//                    case 16:
+//                        aFaturamentoImport.setAlutelefone((String) getCellValue(nextCell));
+//                        break;                        
+//                    case 17:
+//                        aFaturamentoImport.setAlutelefone2((String) getCellValue(nextCell));
+//                        break;                        
+//                    case 18:
+//                        aFaturamentoImport.setAluemail((String) getCellValue(nextCell));
+//                        break;                        
+//                    case 19:
+//                        aFaturamentoImport.setAlucpf((String) getCellValue(nextCell));
+//                        break;                       
                     case 20:
                         aFaturamentoImport.setValor((float) getCellValue(nextCell));
                         break;                        
@@ -186,8 +197,15 @@ public class ImportarView extends javax.swing.JDialog {
         int result = jf.showOpenDialog(null);
         
         if(result== JFileChooser.APPROVE_OPTION) {
-            String excelPath = jf.getSelectedFile().getAbsolutePath();
-            JOptionPane.showMessageDialog(null, excelPath);
+            try {
+                String excelPath = jf.getSelectedFile().getAbsolutePath();
+                //JOptionPane.showMessageDialog(null, excelPath);
+                
+                faturamento = new ArrayList<>();
+                faturamento = readFaturamentoExcelFile(excelPath);
+            } catch (IOException ex) {
+                Logger.getLogger(ImportarView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         
